@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="color.js"></script>
+  </head>
+  <body>
+    <h1><a href="#!Hello"> Android Project</a> </h1>
+    <input id="night_day" type="button" value="night" onclick=" nightDayHandler(this);">
+    <div id="grid">
+    <ol id='nav'>
+
+    </ol>
+    <article>
+
+    </article>
+<script>
+function fetchPage(name) {
+    fetch(name).then(function(response) {
+      response.text().then(function(text){
+        document.querySelector('article').innerHTML = text;
+          })
+      });
+  }
+  if (location.hash) {
+    fetchPage(location.hash.substr(2));
+  }else{
+    fetchPage('Hello');
+  }
+  fetch('lists').then(function(response){
+     response.text().then(function(text){
+       var items = text.split(',');
+       var i = 0;
+       var tags = '';
+       while(i<items.length){
+         var item = items[i];
+         item = item.trim();
+        var tag = '<li><a href="#!'+item+'" onclick="fetchPage(\''+item+'\')">'+item+'</a></li>';
+         tags = tags + tag;
+         i = i + 1;
+       }
+       document.querySelector('#nav').innerHTML = tags;
+    })
+  });
+</script>
+
+
+</div>
+
+  </body>
+</html>
